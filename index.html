@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="在宅ワークを目指す女性のためのマイワークAIスクール">
+  <title>マイワークAIスクール</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&family=Noto+Serif+JP:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #10274d;
+      --teal: #07877d;
+      --teal-dark: #006d67;
+      --teal-pale: #e9f5f3;
+      --gold: #d4b260;
+      --red: #f4514f;
+      --ink: #17223b;
+      --muted: #66717e;
+      --line: #dbe5e5;
+      --white: #fff;
+      --shadow: 0 14px 38px rgba(18, 59, 69, .10);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #fff;
+      font-family: "Noto Sans JP", sans-serif;
+      line-height: 1.8;
+      letter-spacing: .025em;
+    }
+    button, input, textarea { font: inherit; }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+
+    .site-header {
+      position: relative;
+      z-index: 5;
+      background: rgba(255,255,255,.96);
+      border-radius: 0 0 34px 34px;
+      box-shadow: 0 8px 26px rgba(11, 71, 72, .07);
+    }
+    .header-inner {
+      min-height: 108px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .eyebrow { margin: 0 0 6px; color: var(--navy); font-size: 12px; font-weight: 700; }
+    .logo { display: flex; align-items: center; gap: 12px; color: var(--teal); font-size: 25px; font-weight: 700; }
+    .logo-mark {
+      display: grid;
+      width: 39px; height: 39px;
+      place-items: center;
+      border-radius: 50%;
+      color: white;
+      background: linear-gradient(145deg, #37a79f, #006f69);
+      font: 700 24px/1 Georgia, serif;
+    }
+    .header-points { display: flex; gap: 28px; color: var(--navy); font-size: 14px; font-weight: 700; }
+    .header-points span { display: flex; align-items: center; gap: 7px; white-space: nowrap; }
+    .header-points i { color: #47aaa9; font-size: 21px; font-style: normal; }
+    .header-points span:last-child i { color: #ed67ae; }
+
+    .hero {
+      min-height: 560px;
+      margin-top: -22px;
+      background:
+        linear-gradient(90deg, #f9ffff 0%, rgba(249,255,255,.97) 38%, rgba(249,255,255,.22) 61%, rgba(255,255,255,.05) 100%),
+        url("hero-ai-school.png") center right / cover no-repeat;
+    }
+    .hero-inner { display: flex; min-height: 560px; align-items: center; }
+    .hero-copy { width: 62%; padding: 70px 0 28px; }
+    .hero-lead { margin: 0; font-family: "Noto Serif JP", serif; font-size: 21px; font-weight: 700; letter-spacing: .08em; }
+    h1 {
+      margin: 10px 0 18px;
+      color: var(--navy);
+      font-family: "Noto Serif JP", serif;
+      font-size: clamp(48px, 6.2vw, 82px);
+      line-height: 1.25;
+      letter-spacing: .05em;
+    }
+    h1 .ai, h1 .price-num { color: var(--teal); }
+    h1 .ai { font-size: 1.25em; font-family: Georgia, serif; letter-spacing: .02em; }
+    .proofs { display: flex; align-items: stretch; gap: 12px; margin-top: 18px; }
+    .proof {
+      position: relative;
+      display: grid;
+      width: 142px; min-height: 115px;
+      place-items: center;
+      padding: 17px 12px 12px;
+      text-align: center;
+      background: radial-gradient(circle, rgba(255,255,255,.9), rgba(255,255,255,.25));
+      border-radius: 50%;
+    }
+    .proof::before, .proof::after { content: "❯❯❯"; position: absolute; top: 47%; color: var(--gold); font-size: 15px; letter-spacing: -5px; transform: rotate(90deg); }
+    .proof::before { left: -6px; }
+    .proof::after { right: -6px; transform: rotate(-90deg); }
+    .proof small { display: block; color: var(--navy); font-size: 11px; font-weight: 700; }
+    .proof strong { display: block; color: var(--teal-dark); font-family: "Noto Serif JP", serif; font-size: 23px; line-height: 1.25; }
+    .proof strong.big { font: 700 43px/1 Georgia, serif; }
+    .proof strong.big em { font-size: 17px; font-style: normal; }
+    .stars { color: var(--gold); font-size: 11px; letter-spacing: 2px; }
+    .hero-band { padding: 12px 20px; color: white; background: linear-gradient(90deg, #0a847b, #00897e 55%, #006d67); text-align: center; font-size: 21px; font-weight: 700; letter-spacing: .08em; }
+
+    section:not(.hero) { padding: 62px 0; }
+    .soft-section { background: linear-gradient(180deg, #fff, #f8fbfb); }
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      margin: 0 0 38px;
+      color: var(--navy);
+      font-family: "Noto Serif JP", serif;
+      font-size: clamp(24px, 3vw, 31px);
+      letter-spacing: .14em;
+      text-align: center;
+    }
+    .section-title::before, .section-title::after { content: ""; width: 64px; height: 1px; background: var(--navy); opacity: .7; }
+    .features { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .feature { padding: 0 28px; border-right: 1px solid var(--line); }
+    .feature:first-child { padding-left: 0; }
+    .feature:last-child { padding-right: 0; border: 0; }
+    .feature-head { display: flex; align-items: center; gap: 15px; min-height: 76px; color: var(--teal-dark); font-weight: 700; }
+    .icon-ring {
+      display: grid;
+      flex: 0 0 62px;
+      width: 62px; height: 62px;
+      place-items: center;
+      border: 1px solid #2ba49d;
+      border-radius: 50%;
+      font-size: 28px;
+      background: white;
+    }
+    .feature p { margin: 14px 0 0; font-size: 14px; }
+
+    .voice-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .voice {
+      padding: 22px;
+      background: white;
+      border: 1px solid #d2d9da;
+      border-radius: 12px;
+      box-shadow: 0 5px 14px rgba(16,39,77,.04);
+    }
+    .voice-person { display: flex; gap: 14px; align-items: center; }
+    .avatar {
+      display: grid; flex: 0 0 62px;
+      width: 62px; height: 62px;
+      place-items: center;
+      border-radius: 50%;
+      color: white;
+      background: linear-gradient(160deg, #e9c7ae 35%, #314153 36% 68%, #f4eee9 69%);
+      font-size: 23px; font-weight: 700;
+    }
+    .voice:nth-child(2) .avatar { background: linear-gradient(160deg, #d5a382 35%, #f4e3d7 36% 68%, #b7a08d 69%); }
+    .voice:nth-child(3) .avatar { background: linear-gradient(160deg, #d8af8d 35%, #e3f0ef 36% 68%, #c5b5a3 69%); }
+    .voice h3 { margin: 0; color: var(--navy); font-size: 15px; }
+    .voice small { color: var(--muted); font-size: 11px; }
+    .voice p { margin: 15px 0 0; font-size: 13px; line-height: 1.9; }
+
+    .plan-wrap {
+      padding: 30px 38px;
+      border: 1px solid #d1e2e1;
+      border-radius: 12px;
+      background: linear-gradient(120deg, #f1f9f8, #fff 48%, #ebf6f5);
+      box-shadow: var(--shadow);
+    }
+    .plan-heading { margin: 0 0 24px; color: var(--teal-dark); text-align: center; font-family: "Noto Serif JP", serif; font-size: 27px; line-height: 1.35; }
+    .plan-heading small { display: block; font-family: "Noto Sans JP", sans-serif; font-size: 12px; }
+    .plan { display: grid; grid-template-columns: 1fr 1fr; align-items: center; }
+    .price { padding: 10px 30px; text-align: center; border-right: 1px solid #55aaa6; }
+    .price h3 { margin: 0; color: var(--navy); font-family: "Noto Serif JP", serif; font-size: 19px; }
+    .monthly { color: var(--navy); font-family: "Noto Serif JP", serif; font-size: 18px; }
+    .monthly strong { font-size: 62px; line-height: 1; }
+    .price p { margin: 8px 0 0; font-size: 13px; font-weight: 700; }
+    .benefits { margin: 0; padding: 5px 25px 5px 60px; list-style: none; }
+    .benefits li { position: relative; margin: 5px 0; font-size: 14px; font-weight: 600; }
+    .benefits li::before { content: "✓"; position: absolute; left: -30px; top: 2px; display: grid; width: 17px; height: 17px; place-items: center; color: var(--teal); border: 1px solid var(--teal); border-radius: 50%; font-size: 11px; }
+
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .faq { border: 1px solid #dfe7e7; border-radius: 12px; background: #fbfdfd; overflow: hidden; }
+    .faq button { display: flex; width: 100%; align-items: center; gap: 10px; padding: 18px 18px 12px; color: var(--teal-dark); border: 0; background: transparent; text-align: left; font-weight: 700; cursor: pointer; }
+    .faq button::before { content: "Q"; display: grid; flex: 0 0 24px; width: 24px; height: 24px; place-items: center; color: white; background: var(--teal); border-radius: 50%; }
+    .faq button::after { content: "＋"; margin-left: auto; font-size: 18px; }
+    .faq.open button::after { content: "−"; }
+    .answer { display: none; padding: 0 20px 18px 52px; color: #303848; font-size: 13px; }
+    .faq.open .answer { display: block; }
+    .answer strong { margin-right: 8px; color: var(--navy); font-size: 17px; }
+
+    .cta-section { position: relative; overflow: hidden; padding: 46px 0 105px; text-align: center; }
+    .cta-section::after {
+      content: ""; position: absolute; z-index: -1; bottom: -125px; left: -5%;
+      width: 110%; height: 185px;
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(100deg, #078b82, #006e69);
+    }
+    .cta-lead { margin: 0 0 16px; color: var(--teal-dark); font-size: 20px; font-weight: 700; }
+    .cta {
+      display: inline-flex;
+      min-width: min(600px, 95%);
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+      padding: 14px 32px 14px 14px;
+      border: 0;
+      border-radius: 50px;
+      color: white;
+      background: linear-gradient(180deg, #ff7c78, #ee4343);
+      box-shadow: 0 11px 22px rgba(222, 63, 60, .28);
+      font-size: 25px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .cta:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(222,63,60,.38); }
+    .cta-badge { display: grid; width: 72px; height: 72px; place-items: center; color: var(--red); background: #fffce9; border-radius: 50%; font-size: 14px; line-height: 1.25; transform: rotate(-6deg); }
+    .cta-badge strong { display: block; font-size: 20px; }
+    .arrow { margin-left: auto; font-size: 38px; font-weight: 400; }
+    .fine-print { margin: 12px 0 0; color: var(--navy); font-size: 12px; font-weight: 700; }
+
+    .dialog { width: min(520px, calc(100% - 30px)); padding: 0; border: 0; border-radius: 18px; box-shadow: 0 25px 70px rgba(7, 43, 54, .3); }
+    .dialog::backdrop { background: rgba(9, 36, 48, .55); backdrop-filter: blur(3px); }
+    .dialog-inner { padding: 30px; }
+    .dialog h2 { margin: 0 0 8px; color: var(--teal-dark); font-family: "Noto Serif JP", serif; }
+    .dialog p { margin: 0 0 20px; color: var(--muted); font-size: 13px; }
+    .form-row { display: grid; gap: 6px; margin: 13px 0; text-align: left; }
+    .form-row label { font-size: 12px; font-weight: 700; }
+    .form-row input, .form-row textarea { width: 100%; padding: 11px 13px; border: 1px solid #cedbdb; border-radius: 7px; outline-color: var(--teal); }
+    .form-actions { display: flex; gap: 10px; margin-top: 20px; }
+    .submit, .close { flex: 1; padding: 11px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+    .submit { color: white; border: 0; background: var(--teal); }
+    .close { color: var(--muted); border: 1px solid #ccd5d5; background: white; }
+    .thanks { display: none; padding: 38px 20px; text-align: center; }
+
+    @media (max-width: 800px) {
+      .container { width: min(100% - 28px, 620px); }
+      .site-header { border-radius: 0 0 20px 20px; }
+      .header-inner { min-height: 78px; }
+      .eyebrow { display: none; }
+      .logo { font-size: 18px; }
+      .logo-mark { width: 32px; height: 32px; font-size: 19px; }
+      .header-points span:not(:first-child) { display: none; }
+      .header-points { font-size: 11px; }
+      .hero { min-height: 680px; margin-top: -10px; background: linear-gradient(180deg, rgba(249,255,255,.97) 0 50%, rgba(249,255,255,.12) 70%), url("hero-ai-school.png") 63% bottom / auto 66% no-repeat; }
+      .hero-inner { min-height: 680px; align-items: flex-start; }
+      .hero-copy { width: 100%; padding-top: 48px; text-align: center; }
+      .hero-lead { font-size: 15px; }
+      h1 { margin: 6px 0 4px; font-size: clamp(38px, 12vw, 58px); }
+      .proofs { justify-content: center; gap: 0; transform: scale(.82); transform-origin: top center; }
+      .proof { width: 125px; }
+      .hero-band { font-size: 15px; line-height: 1.6; }
+      section:not(.hero) { padding: 48px 0; }
+      .section-title { gap: 12px; margin-bottom: 28px; font-size: 21px; }
+      .section-title::before, .section-title::after { width: 26px; }
+      .features, .voice-grid, .plan, .faq-grid { grid-template-columns: 1fr; }
+      .feature, .feature:first-child, .feature:last-child { padding: 18px 0; border-right: 0; border-bottom: 1px solid var(--line); }
+      .feature:last-child { border-bottom: 0; }
+      .voice-grid { gap: 14px; }
+      .plan-wrap { padding: 24px 18px; }
+      .price { padding: 0 0 22px; border-right: 0; border-bottom: 1px solid #55aaa6; }
+      .monthly strong { font-size: 52px; }
+      .benefits { padding: 20px 0 0 42px; }
+      .faq-grid { gap: 10px; }
+      .cta-lead { font-size: 16px; }
+      .cta { gap: 10px; padding-right: 14px; font-size: 18px; }
+      .cta-badge { width: 61px; height: 61px; font-size: 11px; }
+      .cta-badge strong { font-size: 17px; }
+      .arrow { font-size: 27px; }
+    }
+
+    @media (max-width: 420px) {
+      .header-points { display: none; }
+      .proofs { margin: 15px -35px 0; transform: scale(.71); }
+      .hero { min-height: 630px; }
+      .hero-inner { min-height: 630px; }
+      .hero-copy { padding-top: 42px; }
+      .cta { min-width: 100%; font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div>
+        <p class="eyebrow">在宅ワークを目指す主婦のための</p>
+        <a href="#" class="logo" aria-label="マイワークAIスクール トップ">
+          <span class="logo-mark">m</span>
+          <span>マイワークAIスクール</span>
+        </a>
+      </div>
+      <div class="header-points" aria-label="スクールのポイント">
+        <span><i>▱</i>オンライン完結</span>
+        <span><i>♥</i>初心者歓迎</span>
+        <span><i>♥</i>女性サポート充実</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <p class="hero-lead">未経験から在宅ワークで収入をつくる！</p>
+          <h1><span class="ai">AI</span> スキルで<br>月<span class="price-num">5</span>万円を目指す</h1>
+          <div class="proofs" aria-label="実績">
+            <div class="proof"><div><small>受講者満足度</small><strong class="big">96<em>%</em></strong><span class="stars">★★★★★</span></div></div>
+            <div class="proof"><div><small>初心者でも安心</small><strong>丁寧な<br>サポート</strong><span class="stars">★★★★★</span></div></div>
+            <div class="proof"><div><small>在宅ワークに役立つ</small><strong>実践<br>スキル</strong><span class="stars">★★★★★</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="hero-band">家事や育児と両立しながら、理想の働き方を実現しませんか？</div>
+
+    <section>
+      <div class="container">
+        <h2 class="section-title">マイワークAIスクールの特徴</h2>
+        <div class="features">
+          <article class="feature">
+            <div class="feature-head"><span class="icon-ring">▤</span><span>未経験から始められる<br>カリキュラム</span></div>
+            <p>AIの基礎から実践まで、ステップバイステップで学習。専門用語もわかりやすく解説します。</p>
+          </article>
+          <article class="feature">
+            <div class="feature-head"><span class="icon-ring">▱</span><span>在宅ワークに直結する<br>実践スキル</span></div>
+            <p>文章作成、画像生成、データ分析など、在宅ワークで需要の高いスキルを習得できます。</p>
+          </article>
+          <article class="feature">
+            <div class="feature-head"><span class="icon-ring">♙</span><span>手厚いサポート体制</span></div>
+            <p>質問し放題のサポートや定期面談で、学習の不安を解消。仲間と学べるコミュニティもあります。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="soft-section">
+      <div class="container">
+        <h2 class="section-title">受講生の声</h2>
+        <div class="voice-grid">
+          <article class="voice">
+            <div class="voice-person"><span class="avatar">Y</span><div><h3>家事の合間に学んで<br>月5万円を達成！</h3><small>30代 主婦</small></div></div>
+            <p>パソコンは苦手でしたが、動画で丁寧に教えてもらえたので安心して学べました。今では在宅で月5万円の収入を得られています！</p>
+          </article>
+          <article class="voice">
+            <div class="voice-person"><span class="avatar">M</span><div><h3>自信がついて<br>新しい働き方に！</h3><small>40代 主婦</small></div></div>
+            <p>AIを使うなんて難しそうと思っていましたが、実践的な内容で楽しく学べました。今ではお仕事の幅も広がり、毎日が充実しています。</p>
+          </article>
+          <article class="voice">
+            <div class="voice-person"><span class="avatar">S</span><div><h3>サポートが心強くて<br>続けられました！</h3><small>30代 主婦</small></div></div>
+            <p>わからないことはすぐに相談できて、いつも励ましてもらえたので最後までやり切れました。仲間の存在も大きかったです！</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container plan-wrap">
+        <h2 class="plan-heading">料金プラン<small>分割払いにも対応しています</small></h2>
+        <div class="plan">
+          <div class="price">
+            <h3>スタンダードプラン</h3>
+            <div class="monthly">月々 <strong>6,200</strong>円〜</div>
+            <p>一括払い：198,000円（税込）</p>
+          </div>
+          <ul class="benefits">
+            <li>動画教材見放題</li>
+            <li>課題添削・フィードバック</li>
+            <li>チャットサポート（質問し放題）</li>
+            <li>会員限定コミュニティ参加</li>
+            <li>卒業後の案件紹介サポート</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="soft-section">
+      <div class="container">
+        <h2 class="section-title">よくある質問</h2>
+        <div class="faq-grid">
+          <div class="faq open">
+            <button type="button" aria-expanded="true">パソコンが苦手でも大丈夫ですか？</button>
+            <div class="answer"><strong>A</strong>はい、大丈夫です。基礎から丁寧に解説するので、初心者の方でも安心して学習できます。</div>
+          </div>
+          <div class="faq">
+            <button type="button" aria-expanded="false">受講期間はどのくらいですか？</button>
+            <div class="answer"><strong>A</strong>標準学習期間は3ヶ月です。期間終了後もサポートや教材の閲覧は可能です。</div>
+          </div>
+          <div class="faq">
+            <button type="button" aria-expanded="false">学習時間はどのくらい必要ですか？</button>
+            <div class="answer"><strong>A</strong>1日1〜2時間、スキマ時間での学習でOKです。ご自身のペースで進められます。</div>
+          </div>
+          <div class="faq">
+            <button type="button" aria-expanded="false">返金保証はありますか？</button>
+            <div class="answer"><strong>A</strong>受講開始から8日以内であれば、条件に基づき全額返金保証をご利用いただけます。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section" id="consultation">
+      <div class="container">
+        <p class="cta-lead">まずは無料相談で、あなたに合った学習プランをご提案します！</p>
+        <button class="cta" type="button" id="open-dialog">
+          <span class="cta-badge">簡単<strong>30秒</strong></span>
+          <span>無料相談に申し込む</span>
+          <span class="arrow">›</span>
+        </button>
+        <p class="fine-print">無理な勧誘は一切ありませんので、ご安心ください。</p>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="dialog" id="consult-dialog">
+    <div class="dialog-inner" id="form-area">
+      <h2>無料相談のお申し込み</h2>
+      <p>担当スタッフより、通常1営業日以内にご連絡します。</p>
+      <form id="consult-form">
+        <div class="form-row"><label for="name">お名前</label><input id="name" name="name" required placeholder="山田 花子"></div>
+        <div class="form-row"><label for="email">メールアドレス</label><input id="email" name="email" type="email" required placeholder="you@example.com"></div>
+        <div class="form-row"><label for="message">ご相談内容（任意）</label><textarea id="message" name="message" rows="3" placeholder="現在のお悩みやご希望をお聞かせください"></textarea></div>
+        <div class="form-actions"><button class="close" type="button">閉じる</button><button class="submit" type="submit">申し込む</button></div>
+      </form>
+    </div>
+    <div class="thanks" id="thanks"><h2>お申し込みありがとうございます</h2><p>内容を確認のうえ、担当スタッフよりご連絡します。</p><button class="submit close" type="button">閉じる</button></div>
+  </dialog>
+
+  <script>
+    document.querySelectorAll(".faq button").forEach((button) => {
+      button.addEventListener("click", () => {
+        const item = button.closest(".faq");
+        item.classList.toggle("open");
+        button.setAttribute("aria-expanded", item.classList.contains("open"));
+      });
+    });
+
+    const dialog = document.getElementById("consult-dialog");
+    document.getElementById("open-dialog").addEventListener("click", () => dialog.showModal());
+    document.querySelectorAll(".close").forEach((button) => button.addEventListener("click", () => dialog.close()));
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+    document.getElementById("consult-form").addEventListener("submit", (event) => {
+      event.preventDefault();
+      document.getElementById("form-area").style.display = "none";
+      document.getElementById("thanks").style.display = "block";
+    });
+  </script>
+</body>
+</html>
